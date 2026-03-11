@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Professional Multi Tools</title>
+<title>Online Multi Tools</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,7 +18,7 @@ header{
 background:#2c3e50;
 color:white;
 text-align:center;
-padding:15px;
+padding:20px;
 }
 
 nav{
@@ -41,18 +41,38 @@ nav button:hover{
 background:#1abc9c;
 }
 
+.search-box{
+text-align:center;
+margin:20px;
+}
+
+#searchTool{
+padding:10px;
+width:80%;
+max-width:400px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
 .container{
-max-width:1000px;
-margin:auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
 padding:20px;
+max-width:1200px;
+margin:auto;
 }
 
 .tool{
 background:white;
 padding:20px;
-margin-bottom:15px;
-border-radius:8px;
-box-shadow:0 0 8px rgba(0,0,0,0.1);
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.tool:hover{
+transform:scale(1.03);
 }
 
 .category{
@@ -60,12 +80,15 @@ display:none;
 }
 
 .active{
-display:block;
+display:grid;
 }
 
 input{
-padding:8px;
-margin:5px;
+padding:10px;
+margin:5px 0;
+width:95%;
+border:1px solid #ccc;
+border-radius:4px;
 }
 
 button.calc{
@@ -74,6 +97,12 @@ color:white;
 border:none;
 padding:8px 12px;
 cursor:pointer;
+margin-top:5px;
+}
+
+.result{
+margin-top:10px;
+font-weight:bold;
 }
 
 </style>
@@ -83,252 +112,410 @@ cursor:pointer;
 <body>
 
 <header>
-<h1>Online Multi Tools Website</h1>
+
+<h1>Online Multi Tools</h1>
+<p>Utility • Finance • Health • Converter Tools</p>
+
 </header>
 
 <nav>
 
-<button onclick="show('utility')">Utility Tools</button>
-<button onclick="show('finance')">Finance Tools</button>
-<button onclick="show('health')">Health Tools</button>
-<button onclick="show('converter')">Converter Tools</button>
+<button onclick="show('utility')">Utility</button>
+<button onclick="show('finance')">Finance</button>
+<button onclick="show('health')">Health</button>
+<button onclick="show('converter')">Converter</button>
 
 </nav>
 
-<div class="container">
+<div class="search-box">
 
-<!-- UTILITY TOOLS -->
+<input type="text" id="searchTool" placeholder="Search tools..." onkeyup="searchTools()">
 
-<div id="utility" class="category active">
+</div>
+
+
+<!-- UTILITY -->
+
+<div id="utility" class="container category active">
 
 <div class="tool">
+
 <h3>Age Calculator</h3>
+
 <input type="date" id="dob">
+
 <button class="calc" onclick="age()">Calculate</button>
-<p id="ageResult"></p>
+
+<div id="ageResult" class="result"></div>
+
 </div>
 
 <div class="tool">
+
 <h3>Percentage Calculator</h3>
-<input type="number" id="value">
-<input type="number" id="percent">
+
+<input type="number" id="value" placeholder="Total Value">
+
+<input type="number" id="percent" placeholder="Percentage (%)">
+
 <button class="calc" onclick="percentage()">Calculate</button>
-<p id="percentResult"></p>
+
+<div id="percentResult" class="result"></div>
+
 </div>
 
 <div class="tool">
+
 <h3>Discount Calculator</h3>
-<input type="number" id="price">
-<input type="number" id="discount">
+
+<input type="number" id="price" placeholder="Original Price (₹)">
+
+<input type="number" id="discount" placeholder="Discount (%)">
+
 <button class="calc" onclick="discountCalc()">Calculate</button>
-<p id="discountResult"></p>
+
+<div id="discountResult" class="result"></div>
+
 </div>
 
 </div>
+
 
 <!-- FINANCE -->
 
-<div id="finance" class="category">
+<div id="finance" class="container category">
 
 <div class="tool">
+
 <h3>SIP Calculator</h3>
-<input type="number" id="sipAmount" placeholder="Monthly investment">
-<input type="number" id="sipRate" placeholder="Interest %">
-<input type="number" id="sipYears" placeholder="Years">
+
+<input type="number" id="sipAmount" placeholder="Monthly Investment (₹)">
+
+<input type="number" id="sipRate" placeholder="Expected Return Rate (%)">
+
+<input type="number" id="sipYears" placeholder="Investment Period (Years)">
+
 <button class="calc" onclick="sip()">Calculate</button>
-<p id="sipResult"></p>
+
+<div id="sipResult" class="result"></div>
+
 </div>
 
 <div class="tool">
+
 <h3>EMI Calculator</h3>
-<input type="number" id="loan">
-<input type="number" id="rate">
-<input type="number" id="years">
+
+<input type="number" id="loan" placeholder="Loan Amount (₹)">
+
+<input type="number" id="rate" placeholder="Interest Rate (%)">
+
+<input type="number" id="years" placeholder="Loan Tenure (Years)">
+
 <button class="calc" onclick="emi()">Calculate</button>
-<p id="emiResult"></p>
+
+<div id="emiResult" class="result"></div>
+
 </div>
 
 <div class="tool">
+
 <h3>GST Calculator</h3>
-<input type="number" id="gstAmount">
-<input type="number" id="gstRate">
+
+<input type="number" id="gstAmount" placeholder="Original Price (₹)">
+
+<input type="number" id="gstRate" placeholder="GST Rate (%)">
+
 <button class="calc" onclick="gst()">Calculate</button>
-<p id="gstResult"></p>
+
+<div id="gstResult" class="result"></div>
+
 </div>
 
 <div class="tool">
+
 <h3>Profit Calculator</h3>
-<input type="number" id="cost">
-<input type="number" id="sell">
+
+<input type="number" id="cost" placeholder="Cost Price (₹)">
+
+<input type="number" id="sell" placeholder="Selling Price (₹)">
+
 <button class="calc" onclick="profit()">Calculate</button>
-<p id="profitResult"></p>
+
+<div id="profitResult" class="result"></div>
+
 </div>
 
 </div>
+
 
 <!-- HEALTH -->
 
-<div id="health" class="category">
+<div id="health" class="container category">
 
 <div class="tool">
+
 <h3>BMI Calculator</h3>
-<input type="number" id="weight">
-<input type="number" id="height">
+
+<input type="number" id="weight" placeholder="Weight (kg)">
+
+<input type="number" id="height" placeholder="Height (cm)">
+
 <button class="calc" onclick="bmi()">Calculate</button>
-<p id="bmiResult"></p>
+
+<div id="bmiResult" class="result"></div>
+
 </div>
 
 <div class="tool">
+
 <h3>Calories Calculator</h3>
-<input type="number" id="ageYears">
-<input type="number" id="calWeight">
-<input type="number" id="calHeight">
+
+<input type="number" id="ageYears" placeholder="Age (Years)">
+
+<input type="number" id="calWeight" placeholder="Weight (kg)">
+
+<input type="number" id="calHeight" placeholder="Height (cm)">
+
 <button class="calc" onclick="calories()">Calculate</button>
-<p id="caloriesResult"></p>
+
+<div id="caloriesResult" class="result"></div>
+
 </div>
 
 <div class="tool">
+
 <h3>Ideal Weight Calculator</h3>
-<input type="number" id="idealHeight">
+
+<input type="number" id="idealHeight" placeholder="Height (cm)">
+
 <button class="calc" onclick="idealWeight()">Calculate</button>
-<p id="idealResult"></p>
+
+<div id="idealResult" class="result"></div>
+
 </div>
 
 </div>
+
 
 <!-- CONVERTER -->
 
-<div id="converter" class="category">
+<div id="converter" class="container category">
 
 <div class="tool">
-<h3>Length Converter (Meter → KM)</h3>
-<input type="number" id="meter">
+
+<h3>Length Converter</h3>
+
+<input type="number" id="meter" placeholder="Length in Meter">
+
 <button class="calc" onclick="length()">Convert</button>
-<p id="lengthResult"></p>
+
+<div id="lengthResult" class="result"></div>
+
 </div>
 
 <div class="tool">
-<h3>Weight Converter (KG → Gram)</h3>
-<input type="number" id="kg">
+
+<h3>Weight Converter</h3>
+
+<input type="number" id="kg" placeholder="Weight in Kilograms">
+
 <button class="calc" onclick="weight()">Convert</button>
-<p id="weightResult"></p>
+
+<div id="weightResult" class="result"></div>
+
 </div>
 
 <div class="tool">
-<h3>Temperature Converter (C → F)</h3>
-<input type="number" id="temp">
+
+<h3>Temperature Converter</h3>
+
+<input type="number" id="temp" placeholder="Temperature in Celsius">
+
 <button class="calc" onclick="temp()">Convert</button>
-<p id="tempResult"></p>
-</div>
+
+<div id="tempResult" class="result"></div>
 
 </div>
 
 </div>
+
 
 <script>
 
 function show(section){
+
 let categories=document.querySelectorAll(".category");
+
 categories.forEach(cat=>cat.style.display="none");
-document.getElementById(section).style.display="block";
+
+document.getElementById(section).style.display="grid";
+
 }
 
-/* AGE CALCULATOR WITH YEARS MONTHS DAYS */
+function searchTools(){
+
+let input=document.getElementById("searchTool").value.toLowerCase();
+
+let tools=document.getElementsByClassName("tool");
+
+for(let i=0;i<tools.length;i++){
+
+let text=tools[i].innerText.toLowerCase();
+
+if(text.includes(input)){
+
+tools[i].style.display="block";
+
+}else{
+
+tools[i].style.display="none";
+
+}
+
+}
+
+}
+
+
+/* AGE */
 
 function age(){
 
 let dob=new Date(document.getElementById("dob").value);
+
 let today=new Date();
 
 let years=today.getFullYear()-dob.getFullYear();
+
 let months=today.getMonth()-dob.getMonth();
+
 let days=today.getDate()-dob.getDate();
 
 if(days<0){
+
 months--;
+
 days+=30;
+
 }
 
 if(months<0){
+
 years--;
+
 months+=12;
-}
-
-ageResult.innerHTML=
-years+" Years "+months+" Months "+days+" Days";
 
 }
 
-/* OTHER TOOLS */
+ageResult.innerHTML=years+" Years "+months+" Months "+days+" Days";
+
+}
+
+
+/* UTILITY */
 
 function percentage(){
-let result=(value.value*percent.value)/100;
-percentResult.innerHTML="Result "+result;
+
+percentResult.innerHTML=(value.value*percent.value)/100;
+
 }
 
 function discountCalc(){
-let final=price.value-(price.value*discount.value/100);
-discountResult.innerHTML="Final Price ₹ "+final;
+
+discountResult.innerHTML=price.value-(price.value*discount.value/100);
+
 }
 
+
+/* FINANCE */
+
 function sip(){
+
 let P=sipAmount.value;
+
 let r=sipRate.value/100/12;
+
 let n=sipYears.value*12;
+
 let FV=P*((Math.pow(1+r,n)-1)/r)*(1+r);
+
 sipResult.innerHTML="Future Value ₹ "+FV.toFixed(2);
+
 }
 
 function emi(){
+
 let P=loan.value;
+
 let r=rate.value/100/12;
+
 let n=years.value*12;
+
 let EMI=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+
 emiResult.innerHTML="Monthly EMI ₹ "+EMI.toFixed(2);
+
 }
 
 function gst(){
-let total=gstAmount.value*(1+gstRate.value/100);
-gstResult.innerHTML="Total with GST ₹ "+total;
+
+gstResult.innerHTML="Total ₹ "+(gstAmount.value*(1+gstRate.value/100));
+
 }
 
 function profit(){
-let profit=sell.value-cost.value;
-profitResult.innerHTML="Profit ₹ "+profit;
+
+profitResult.innerHTML="Profit ₹ "+(sell.value-cost.value);
+
 }
 
+
+/* HEALTH */
+
 function bmi(){
+
 let h=height.value/100;
-let b=weight.value/(h*h);
-bmiResult.innerHTML="BMI "+b.toFixed(2);
+
+bmiResult.innerHTML="BMI "+(weight.value/(h*h)).toFixed(2);
+
 }
 
 function calories(){
-let cal=10*calWeight.value + 6.25*calHeight.value -5*ageYears.value +5;
-caloriesResult.innerHTML="Daily Calories "+cal;
+
+caloriesResult.innerHTML="Daily Calories "+(10*calWeight.value+6.25*calHeight.value-5*ageYears.value+5);
+
 }
 
 function idealWeight(){
-let w=idealHeight.value-100;
-idealResult.innerHTML="Ideal Weight "+w+" kg";
+
+idealResult.innerHTML="Ideal Weight "+(idealHeight.value-100)+" kg";
+
 }
 
+
+/* CONVERTERS */
+
 function length(){
-let km=meter.value/1000;
-lengthResult.innerHTML=km+" KM";
+
+lengthResult.innerHTML=(meter.value/1000)+" km";
+
 }
 
 function weight(){
-let g=kg.value*1000;
-weightResult.innerHTML=g+" grams";
+
+weightResult.innerHTML=(kg.value*1000)+" grams";
+
 }
 
 function temp(){
-let f=(temp.value*9/5)+32;
-tempResult.innerHTML=f+" °F";
+
+tempResult.innerHTML=(temp.value*9/5)+32+" °F";
+
 }
 
 </script>
 
 </body>
+
 </html>
+ 
