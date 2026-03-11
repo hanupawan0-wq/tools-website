@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Professional Multi Tools</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f2f4f7;
+}
+
+header{
+background:#2c3e50;
+color:white;
+text-align:center;
+padding:15px;
+}
+
+nav{
+background:#34495e;
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+nav button{
+background:none;
+border:none;
+color:white;
+padding:14px 18px;
+cursor:pointer;
+font-size:16px;
+}
+
+nav button:hover{
+background:#1abc9c;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+.tool{
+background:white;
+padding:20px;
+margin-bottom:15px;
+border-radius:8px;
+box-shadow:0 0 8px rgba(0,0,0,0.1);
+}
+
+.category{
+display:none;
+}
+
+.active{
+display:block;
+}
+
+input{
+padding:8px;
+margin:5px;
+}
+
+button.calc{
+background:#3498db;
+color:white;
+border:none;
+padding:8px 12px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Online Multi Tools Website</h1>
+</header>
+
+<nav>
+
+<button onclick="show('utility')">Utility Tools</button>
+<button onclick="show('finance')">Finance Tools</button>
+<button onclick="show('health')">Health Tools</button>
+<button onclick="show('converter')">Converter Tools</button>
+
+</nav>
+
+<div class="container">
+
+<!-- UTILITY TOOLS -->
+
+<div id="utility" class="category active">
+
+<div class="tool">
+<h3>Age Calculator</h3>
+<input type="date" id="dob">
+<button class="calc" onclick="age()">Calculate</button>
+<p id="ageResult"></p>
+</div>
+
+<div class="tool">
+<h3>Percentage Calculator</h3>
+<input type="number" id="value">
+<input type="number" id="percent">
+<button class="calc" onclick="percentage()">Calculate</button>
+<p id="percentResult"></p>
+</div>
+
+<div class="tool">
+<h3>Discount Calculator</h3>
+<input type="number" id="price">
+<input type="number" id="discount">
+<button class="calc" onclick="discountCalc()">Calculate</button>
+<p id="discountResult"></p>
+</div>
+
+</div>
+
+<!-- FINANCE -->
+
+<div id="finance" class="category">
+
+<div class="tool">
+<h3>SIP Calculator</h3>
+<input type="number" id="sipAmount" placeholder="Monthly investment">
+<input type="number" id="sipRate" placeholder="Interest %">
+<input type="number" id="sipYears" placeholder="Years">
+<button class="calc" onclick="sip()">Calculate</button>
+<p id="sipResult"></p>
+</div>
+
+<div class="tool">
+<h3>EMI Calculator</h3>
+<input type="number" id="loan">
+<input type="number" id="rate">
+<input type="number" id="years">
+<button class="calc" onclick="emi()">Calculate</button>
+<p id="emiResult"></p>
+</div>
+
+<div class="tool">
+<h3>GST Calculator</h3>
+<input type="number" id="gstAmount">
+<input type="number" id="gstRate">
+<button class="calc" onclick="gst()">Calculate</button>
+<p id="gstResult"></p>
+</div>
+
+<div class="tool">
+<h3>Profit Calculator</h3>
+<input type="number" id="cost">
+<input type="number" id="sell">
+<button class="calc" onclick="profit()">Calculate</button>
+<p id="profitResult"></p>
+</div>
+
+</div>
+
+<!-- HEALTH -->
+
+<div id="health" class="category">
+
+<div class="tool">
+<h3>BMI Calculator</h3>
+<input type="number" id="weight">
+<input type="number" id="height">
+<button class="calc" onclick="bmi()">Calculate</button>
+<p id="bmiResult"></p>
+</div>
+
+<div class="tool">
+<h3>Calories Calculator</h3>
+<input type="number" id="ageYears">
+<input type="number" id="calWeight">
+<input type="number" id="calHeight">
+<button class="calc" onclick="calories()">Calculate</button>
+<p id="caloriesResult"></p>
+</div>
+
+<div class="tool">
+<h3>Ideal Weight Calculator</h3>
+<input type="number" id="idealHeight">
+<button class="calc" onclick="idealWeight()">Calculate</button>
+<p id="idealResult"></p>
+</div>
+
+</div>
+
+<!-- CONVERTER -->
+
+<div id="converter" class="category">
+
+<div class="tool">
+<h3>Length Converter (Meter → KM)</h3>
+<input type="number" id="meter">
+<button class="calc" onclick="length()">Convert</button>
+<p id="lengthResult"></p>
+</div>
+
+<div class="tool">
+<h3>Weight Converter (KG → Gram)</h3>
+<input type="number" id="kg">
+<button class="calc" onclick="weight()">Convert</button>
+<p id="weightResult"></p>
+</div>
+
+<div class="tool">
+<h3>Temperature Converter (C → F)</h3>
+<input type="number" id="temp">
+<button class="calc" onclick="temp()">Convert</button>
+<p id="tempResult"></p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function show(section){
+let categories=document.querySelectorAll(".category");
+categories.forEach(cat=>cat.style.display="none");
+document.getElementById(section).style.display="block";
+}
+
+/* AGE CALCULATOR WITH YEARS MONTHS DAYS */
+
+function age(){
+
+let dob=new Date(document.getElementById("dob").value);
+let today=new Date();
+
+let years=today.getFullYear()-dob.getFullYear();
+let months=today.getMonth()-dob.getMonth();
+let days=today.getDate()-dob.getDate();
+
+if(days<0){
+months--;
+days+=30;
+}
+
+if(months<0){
+years--;
+months+=12;
+}
+
+ageResult.innerHTML=
+years+" Years "+months+" Months "+days+" Days";
+
+}
+
+/* OTHER TOOLS */
+
+function percentage(){
+let result=(value.value*percent.value)/100;
+percentResult.innerHTML="Result "+result;
+}
+
+function discountCalc(){
+let final=price.value-(price.value*discount.value/100);
+discountResult.innerHTML="Final Price ₹ "+final;
+}
+
+function sip(){
+let P=sipAmount.value;
+let r=sipRate.value/100/12;
+let n=sipYears.value*12;
+let FV=P*((Math.pow(1+r,n)-1)/r)*(1+r);
+sipResult.innerHTML="Future Value ₹ "+FV.toFixed(2);
+}
+
+function emi(){
+let P=loan.value;
+let r=rate.value/100/12;
+let n=years.value*12;
+let EMI=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+emiResult.innerHTML="Monthly EMI ₹ "+EMI.toFixed(2);
+}
+
+function gst(){
+let total=gstAmount.value*(1+gstRate.value/100);
+gstResult.innerHTML="Total with GST ₹ "+total;
+}
+
+function profit(){
+let profit=sell.value-cost.value;
+profitResult.innerHTML="Profit ₹ "+profit;
+}
+
+function bmi(){
+let h=height.value/100;
+let b=weight.value/(h*h);
+bmiResult.innerHTML="BMI "+b.toFixed(2);
+}
+
+function calories(){
+let cal=10*calWeight.value + 6.25*calHeight.value -5*ageYears.value +5;
+caloriesResult.innerHTML="Daily Calories "+cal;
+}
+
+function idealWeight(){
+let w=idealHeight.value-100;
+idealResult.innerHTML="Ideal Weight "+w+" kg";
+}
+
+function length(){
+let km=meter.value/1000;
+lengthResult.innerHTML=km+" KM";
+}
+
+function weight(){
+let g=kg.value*1000;
+weightResult.innerHTML=g+" grams";
+}
+
+function temp(){
+let f=(temp.value*9/5)+32;
+tempResult.innerHTML=f+" °F";
+}
+
+</script>
+
+</body>
+</html>
